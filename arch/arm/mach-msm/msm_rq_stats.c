@@ -122,7 +122,7 @@ static int update_average_load(unsigned int freq, unsigned int cpu)
 	if (idle_time >= iowait_time)
 		idle_time -= iowait_time;
 
-	if (unlikely(!wall_time || wall_time < idle_time))
+	if (unlikely(wall_time <= 0 || wall_time < idle_time))
 		return 0;
 
 	cur_load = 100 * (wall_time - idle_time) / wall_time;
@@ -180,7 +180,7 @@ static int cpufreq_transition_handler(struct notifier_block *nb,
 		for_each_cpu(j, this_cpu->related_cpus) {
 			struct cpu_load_data *pcpu = &per_cpu(cpuload, j);
 			mutex_lock(&pcpu->cpu_load_mutex);
-			update_average_load(freqs->old, freqs->cpu);
+			update_average_load(freqs->old, j);
 			pcpu->cur_freq = freqs->new;
 			mutex_unlock(&pcpu->cpu_load_mutex);
 		}
@@ -461,7 +461,7 @@ static int __init msm_rq_stats_init(void)
 		struct cpu_load_data *pcpu = &per_cpu(cpuload, i);
 		mutex_init(&pcpu->cpu_load_mutex);
 		cpufreq_get_policy(&cpu_policy, i);
-		pcpu->policy_max = cpu_policy.cpuinfo.max_freq;
+		pcpu->policy_max = cpu_policy.max;
 		if (cpu_online(i))
 			pcpu->cur_freq = cpufreq_quick_get(i);
 		cpumask_copy(pcpu->related_cpus, cpu_policy.cpus);
