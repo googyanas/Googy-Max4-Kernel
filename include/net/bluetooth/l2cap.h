@@ -452,6 +452,7 @@ struct l2cap_conn {
 	__u8		disc_reason;
 
 	struct l2cap_chan_list chan_list;
+	struct smp_chan		*smp_chan;
 };
 
 struct sock_del_list {
