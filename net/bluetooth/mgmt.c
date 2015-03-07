@@ -2851,7 +2851,7 @@ int mgmt_set_powered_failed(struct hci_dev *hdev, int err)
 	struct pending_cmd *cmd;
 	u8 status;
 
-	cmd = mgmt_pending_find(MGMT_OP_SET_POWERED, hdev);
+	cmd = mgmt_pending_find(MGMT_OP_SET_POWERED, hdev->id);
 	if (!cmd)
 		return -ENOENT;
 
