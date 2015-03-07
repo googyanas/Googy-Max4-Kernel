@@ -1837,6 +1837,7 @@ __acquires(&gcwq->lock)
 	struct global_cwq *gcwq = pool->gcwq;
 	struct hlist_head *bwh = busy_worker_head(gcwq, work);
 	bool cpu_intensive = cwq->wq->flags & WQ_CPU_INTENSIVE;
+	work_func_t f = work->func;
 	int work_color;
 	struct worker *collision;
 #ifdef CONFIG_LOCKDEP
