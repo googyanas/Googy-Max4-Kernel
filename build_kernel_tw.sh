@@ -42,10 +42,10 @@ find $RAMFS_TMP -name EMPTY_DIRECTORY -exec rm -rf {} \;
 #remove mercurial repository
 rm -rf $RAMFS_TMP/.hg
 #copy modules into ramfs
-mkdir -p /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM/system/lib/modules
-rm -rf /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM/system/lib/modules/*
-find -name '*.ko' -exec cp -av {} /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM/system/lib/modules/ \;
-${CROSS_COMPILE}strip --strip-unneeded /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM/system/lib/modules/*
+mkdir -p /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM/system/lib/modules
+rm -rf /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM/system/lib/modules/*
+find -name '*.ko' -exec cp -av {} /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM/system/lib/modules/ \;
+${CROSS_COMPILE}strip --strip-unneeded /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM/system/lib/modules/*
 
 cd $RAMFS_TMP
 find | fakeroot cpio -H newc -o > $RAMFS_TMP.cpio 2>/dev/null
@@ -60,11 +60,11 @@ tools/mkbootimg --cmdline 'console=null androidboot.hardware=qcom user_debug=23 
 
 
 cd /home/googy/Anas/Googy-Max4-Kernel
-mv -f -v /home/googy/Anas/Googy-Max4-Kernel/Kernel/boot.img /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM/boot.img
-cd /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW.CWM
-zip -r ../GoogyMax4_TW-Kernel_${1}_CWM.zip .
+mv -f -v /home/googy/Anas/Googy-Max4-Kernel/Kernel/boot.img /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM/boot.img
+cd /home/googy/Anas/Googy-Max4-Kernel/GT-I9505_GoogyMax4_TW5.CWM
+zip -r ../GoogyMax4_TW5-Kernel_${1}_CWM.zip .
 
-adb push /home/googy/Anas/Googy-Max4-Kernel/GoogyMax4_TW-Kernel_${1}_CWM.zip /storage/sdcard0/GoogyMax4_TW-Kernel_${1}_CWM.zip
+adb push /home/googy/Anas/Googy-Max4-Kernel/GoogyMax4_TW5-Kernel_${1}_CWM.zip /storage/sdcard0/GoogyMax4_TW5-Kernel_${1}_CWM.zip
 
 # adb push /home/googy/Anas/Googy-Max4-Kernel/GoogyMax4_TW-Kernel_${1}_CWM.zip /storage/sdcard0/update-gmax4.zip
 # 
