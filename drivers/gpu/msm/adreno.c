@@ -2205,8 +2205,6 @@ static int adreno_stop(struct kgsl_device *device)
 	adreno_dispatcher_stop(adreno_dev);
 	adreno_ringbuffer_stop(&adreno_dev->ringbuffer);
 
-	kgsl_mmu_stop(&device->mmu);
-
 	device->ftbl->irqctrl(device, 0);
 	kgsl_pwrctrl_irq(device, KGSL_PWRFLAGS_OFF);
 	del_timer_sync(&device->idle_timer);
@@ -2215,6 +2213,8 @@ static int adreno_stop(struct kgsl_device *device)
 
 	/* Save physical performance counter values before GPU power down*/
 	adreno_perfcounter_save(adreno_dev);
+
+	kgsl_mmu_stop(&device->mmu);
 
 	/* Power down the device */
 	kgsl_pwrctrl_disable(device);
@@ -2962,6 +2962,8 @@ int adreno_soft_reset(struct kgsl_device *device)
 		return -EINVAL;
 	}
 
+	clear_bit(ADRENO_DEVICE_STARTED, &adreno_dev->priv);
+
 	if (adreno_dev->drawctxt_active)
 		kgsl_context_put(&adreno_dev->drawctxt_active->base);
 
@@ -3012,7 +3014,10 @@ int adreno_soft_reset(struct kgsl_device *device)
 	if (ret)
 		return ret;
 
-	device->reset_counter++;
+	else {
+		device->reset_counter++;
+		set_bit(ADRENO_DEVICE_STARTED, &adreno_dev->priv);
+	}
 
 	return 0;
 }
