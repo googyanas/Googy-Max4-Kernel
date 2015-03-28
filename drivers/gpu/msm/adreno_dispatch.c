@@ -1059,6 +1059,9 @@ static int dispatcher_do_fault(struct kgsl_device *device)
 		adreno_writereg(adreno_dev, ADRENO_REG_CP_ME_CNTL, reg);
 	}
 
+	/* Set pagefault if it occurred */
+	kgsl_mmu_set_pagefault(&device->mmu);
+
 	adreno_readreg(adreno_dev, ADRENO_REG_CP_IB1_BASE, &base);
 
 	/*
