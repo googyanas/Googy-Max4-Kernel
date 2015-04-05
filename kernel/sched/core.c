@@ -290,7 +290,7 @@ __read_mostly int scheduler_running;
  */
 int sysctl_sched_rt_runtime = 950000;
 
-
+/*
  * Number of sched_yield calls that result in a thread yielding
  * to itself before a sleep is injected in its next sched_yield call
  * Setting this to -1 will disable adding sleep in sched_yield
@@ -301,8 +301,6 @@ const_debug int sysctl_sched_yield_sleep_threshold = 4;
  * is exceeded.
  */
 const_debug unsigned int sysctl_sched_yield_sleep_duration = 50;
-
-/*
 
 /*
  * __task_rq_lock - lock the rq @p resides on.
