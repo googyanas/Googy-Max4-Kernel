@@ -13,7 +13,6 @@
 #include <linux/mfd/max77804k.h>
 #include <linux/mfd/max77804k-private.h>
 #include <linux/of_gpio.h>
-#include <linux/fastchg.h>
 
 #ifdef CONFIG_USB_HOST_NOTIFY
 #include <linux/host_notify.h>
